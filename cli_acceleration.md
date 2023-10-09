@@ -73,6 +73,6 @@ Okay, now that you've got some background, play one of these three games.<br>
 ``` https://gitlab.com/slackermedia/bashcrawl
 https://web.mit.edu/mprat/Public/web/Terminus/Web/main.html
 https://github.com/veltman/clmystery
-```
+``` 
 
 Then, go and read the git accelerator doc... whenever that comes out. 
