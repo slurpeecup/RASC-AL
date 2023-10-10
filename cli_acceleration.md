@@ -68,10 +68,14 @@ to ```.bashrc```, then I will need to run ```source ~/.bashrc``` to use that ali
 
 ```chmod```: change permissions. ```(+-)rwx read write execute```. ie. ```chmod -x+w setup.sh```<br>
 
-Okay, now that you've got some background, play one of these three games.<br>
-``` https://gitlab.com/slackermedia/bashcrawl
-https://web.mit.edu/mprat/Public/web/Terminus/Web/main.html
-https://github.com/veltman/clmystery
-``` 
+Okay, now that you've got some background, play one of these three games. They're designed to give you more famililarity with CLI interfaces.<br>
 
-Then, go and read the git accelerator doc... whenever that comes out. 
+[Bashcrawl](https://gitlab.com/slackermedia/bashcrawl)<br>
+[Terminus](https://web.mit.edu/mprat/Public/web/Terminus/Web/main.html)<br>
+[CLI Mystery](https://github.com/veltman/clmystery)
+
+Beyond this, if you do not already own one, I recommend you dual-boot (if hard drive space permits) or purchase a beater computer for UNIX development. Good, high performance, < $200 candidates are the Lenovo Thinkpad T440P and HP Elitebook series, especially the Ryzen 7/ Core i7 equipped G5-G7s. I use a G5. Linux dual-booting is fairly straight forward, although the experience is not the same for every device. A good starter Debian-based distribution would be [Linux Mint](https://linuxmint.com/edition.php?id=306), [MX Linux](https://mxlinux.org/download-links/), or [Pop!_OS](https://pop.system76.com/). I will not discuss my feelings on Ubuntu. 
+
+There are plenty of great docs out there that touch on Linux dual-booting, and I would refer you to [Google](https://google.com) to find a more detailed one. The case and point is that you will need to download a disk image (such as one linked above), then write it to a USB flash drive using software like [Rufus](https://rufus.ie/en/) or [Balena Etcher](https://etcher.balena.io/#download-etcher). You'll then have to go into your BIOS, disable SecureBoot and TPM, change the boot order to set the flash drive on top, and finally run the guest OS on your live USB and use the installer. Partition your hard drive however you wish (defrag in Windows first to minimize risk) and have fun. 
+
+Assuming the git accelerator doc has been written, read that next. 
