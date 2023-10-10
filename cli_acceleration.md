@@ -16,6 +16,8 @@ ie "cd ../../build/test/results"<br><br>
 ./: run program | ie. ```./mainprogram```. You can run programs in different <br>
 directories by using the same syntax as cd. ie. ```./../../build/test/test.a```<br>
 
+>: pipe terminal output to file | ie ``` ./somecommand > targetfile.txt```<br>
+
 pwd: present working directory - shows what directory you are in.<br>
 
 mkdir: make directory | ie. ```mkdir test_folder```<br><br>
