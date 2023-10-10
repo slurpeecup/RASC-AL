@@ -63,10 +63,13 @@ and update available at the source. If so, it lets you know. <br>
 
 ```apt upgrade```: applies those updates.<br>
 
-```source```: refreshes the file for programs dependent upon it. If I add an alias <br>
-to ```.bashrc```, then I will need to run ```source ~/.bashrc``` to use that alias.<br> 
+```source```: refreshes the file for programs dependent upon it. If I add an alias to ```.bashrc```, then I will need to run ```source ~/.bashrc``` to use that alias.<br> 
 
-```chmod```: change permissions. ```(+-)rwx read write execute```. ie. ```chmod -x+w setup.sh```<br>
+```chmod```: change permissions. ```(+-)rwx read write execute```. ie. ```sudo chmod -x+w setup.sh```<br>
+
+```dpkg```: manual package management from .deb. -i installs, -r removes, ie. ```sudo dpkg -i package.deb```<br>
+
+```tar```: unpack contents of a tar archive. read more on tar [here](https://www.geeksforgeeks.org/tar-command-linux-examples/).<br>
 
 Okay, now that you've got some background, play one of these three games. They're designed to give you more famililarity with CLI interfaces.<br>
 
