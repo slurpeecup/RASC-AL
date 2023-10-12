@@ -61,7 +61,7 @@ Some common ```apt``` commands you will use are ```install```, ```remove```, ```
 You will come across many more as you comb through forum posts. You don't have <br>
 to remember them all, but understanding what they do is helpful sometimes.<br>
 
-```apt install```: Checks if a packages is in the ```apt``` sources list, if it is then install ie. ```sudo apt install supertuxkart``` will install supertuxkart, a really cool game <br>
+```apt install```: Checks if a packages is in the ```apt``` sources list, if it is then install ie. ```sudo apt install supertuxkart``` will install supertuxkart, a really cool game. You can install multiple packages in the same ```apt install``` command by delimiting package names with a space, for example: ```sudo apt install git-all inkscape``` to install git AND inkspace. <br>
 
 ```apt remove```: Opposite of install...<br>
 
