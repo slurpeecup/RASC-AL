@@ -33,19 +33,20 @@ You should not need to use your PAT to push with this method.
 
 Git allows you to pull a codebase into your own personal workspace, or, `local repository`, in order to develop code without affecting the `remote repository` until you are ready to do so. The Git workflow can be modeled in
 
+
+
+![Git_Staging_Image](/Acceleration_Docs/Acceleration_Doc_Images/nm1w0gnf2zh11.png)
+
+It is important to note that files are not phyiscally moved in between these workflow partitions. Moving files between working, staging, and commit changes how Git interacts with them, not how you interact with them physically.
+
 ### Working Directory
 
+The working directory in Git is your project folder, and is where the work is done.  
 ### Staging area
 
 ### Local Branch Commits
 
 ### Local Branch Commits (Tracking)
-
-![Git_Staging_Image](/Acceleration_Docs/Acceleration_Doc_Images/nm1w0gnf2zh11.png)
-
-[Git_Branching_Image](link_dfajkdfhlkjahdsljkfhklajdsfhlkjasdfjlkhasdkljfhlakdjfhk)
-
-
 ## Conflicts
 
 ![merge_conflcts](/Acceleration_Docs/Acceleration_Doc_Images/Git_Merge_Conflict.png)
