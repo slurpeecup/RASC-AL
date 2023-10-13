@@ -35,7 +35,7 @@ You should not need to use your PAT to push with this method.
 [Git_Branching_Image](link_dfajkdfhlkjahdsljkfhklajdsfhlkjasdfjlkhasdkljfhlakdjfhk)
 
 
-## Conflicts
+## Conflicts & Conflict Avoidance
 
 ![merge_conflcts](/Acceleration_Docs/Acceleration_Doc_Images/Git_Merge_Conflict.png)
 
@@ -45,8 +45,21 @@ Another example, let's say Engineer A and Engineer B both pull their project fro
 
 A conflict will not be observed on `2.txt`, as its current state reflects main's understanding of the revision history. On `four.xml`, this merge attempt will be interpreted as "making these changes to the deleted file `four.xml`", as the last understanding of the revision history from main's perspective is that `four.xml` no longer exists. In order to resolve this conflict, Engineer A will have to delete `four.xml`, or at least, move it out of the `/bar` push to main, and then move it back into `/bar` and push again. 
 
+Conflict avoidance is paramount in minimizing headache for yourself and your entire team. Conflict avoidance can be practiced with good team communication and good Git habits. 
+
+In terms of team habits, work on files should be *compartmentalized* between pre-scheduled merges. For example, if the team decides that daily pushes are a good policy to hold, work on a particular file or directory should be assigned to a dedicated individual for the duration of that push cycle. These assignments can be tracked in commit messages, commit descriptions, or ideally, a more comprehensive external team management tool. 
+
+During active work, if a critical modification is made to a piece of software, it is good practice to push it, even if ahead of schedule (still following the mandated team push schedule) in order to ensure that the critical component is not at risk of having to be removed or otherwise fanangled with in the event of a conflict.
+
+It is also good practice to manually review the difference between your current commit and main before merging, as well as during your development cycle if a new push reaches `main`, then resolving conflicts manually before attempting to make a merge or push. This reduces your likelihood of frustration and keeps expectations in check for what will happen during the next merge attempt. 
+
+Sometimes, merge conflicts are inevitable. When you are not able to prevent a merge conflict, it is incumbent upon the user attempting to merge to resolve the conflict on their end. 
+
+When you go to merge and a conflict is found, Git will insert **conflict markers** around the text blocks that are in contention. You can ```grep``` for ```<<<<<<```,```======```, and ```>>>>>>``` to find files and blocks of code that are in conflict with `main`. 
 
 [Branching Theory I Don't Know Where To Put You Right Now](https://nvie.com/posts/a-successful-git-branching-model/)
+
+[Decent git best practices](https://www.freecodecamp.org/news/how-to-use-git-best-practices-for-beginners/#best-practices-for-using-git)
 
 
 
