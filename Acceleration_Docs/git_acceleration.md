@@ -30,7 +30,7 @@ There are ways to hang onto your personal access token for ease of use. One meth
 You should not need to use your PAT to push with this method.
 
 ## Git Essentials
-![image](Acceleration_Docs/Acceleration_Doc_Images/128hsgntnsu9bww0y8sz.jpeg)
+![Git_Staging_Image](/Acceleration_Docs/Acceleration_Doc_Images/nm1w0gnf2zh11.png)
 
 
 [Branching Theory I Don't Know Where To Put You Right Now](https://nvie.com/posts/a-successful-git-branching-model/)
