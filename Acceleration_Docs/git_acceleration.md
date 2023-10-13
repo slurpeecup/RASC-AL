@@ -32,6 +32,8 @@ You should not need to use your PAT to push with this method.
 ## Git Essentials
 ![Git_Staging_Image](/Acceleration_Docs/Acceleration_Doc_Images/nm1w0gnf2zh11.png)
 
+[Git_Branching_Image](link)
+
 
 [Branching Theory I Don't Know Where To Put You Right Now](https://nvie.com/posts/a-successful-git-branching-model/)
 
