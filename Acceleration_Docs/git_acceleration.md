@@ -21,7 +21,7 @@ In order to set up your git credentials to be able to push, you need to set a us
     git config --global user.email [myemail@myemailplace.com] 
     git config --global user.name [myuser]
 
-Make sure to verify you username and email by using the same commands without appending your email to the end. They should return the value currently stored in that config variable, ie ```git config --global user.name``` should return `myuser`.
+Make sure to verify you username and email by using the same commands without appending your email to the end. They should return the value currently stored in that config variable, ie. ```git config --global user.name``` should return `myuser`.
 
 There are ways to hang onto your personal access token for ease of use. One method is to use a [Git Credential Manager](https://github.blog/2022-04-07-git-credential-manager-authentication-for-everyone/). If you do not wish to use this, you can append your .bashrc file like [this](https://devconnected.com/set-environment-variable-bash-how-to/) (scroll down to "Setting Permanent Environment Variables In Bash), then ```$echo``` the variable name when you need to copy it. You can also clone the repo with your personal access token like this:
 
@@ -35,14 +35,19 @@ You should not need to use your PAT to push with this method.
 [Git_Branching_Image](link_dfajkdfhlkjahdsljkfhklajdsfhlkjasdfjlkhasdkljfhlakdjfhk)
 
 
+## Conflicts
+
+![merge_conflcts](/Acceleration_Docs/Acceleration_Doc_Images/Git_Merge_Conflict.png)
+
+Conflicts occur when a branch attempting to merge into or pull from a branch that has a disparate view of the revision history. For example, Engineer A and Engineer B both branch off of `main` into their respective branches `A` and `B`, then begin editing foo.md. Engineer B appends "Hello Wolf!" to the bottom of foo.md. Engineer A appends "Hello Dog!" to the same line. If Engineer B pushes to `main` first, then Engineer A attempts to merge main into their branch or push to main, then a conflict will be observed. Conflicts must be resolved by the user that is behind the main branch. There are online resources that will describe conflict resolution much better than I can, including [here], [over_here], and [here] as well. However, the gist is that the conflicts on the branch must change to reflect `main`'s (or the branch that is being interacted with) understanding of the revision history for the files in conflict. In this case, Engineer A would have to update is version of foo.md to look exactly like what Engineer B pushed to `main`. 
+
+Another example, let's say Engineer A and Engineer B both pull their project from `main` and work on the same directory, `/bar`. This directory contains three files, `1.md`, `2.txt`, and `four.xml` . Engineer B makes some changes to `2.txt`, then deletes `four.xml` , and pushes to main. In the mean time, Engineer A makes modifications to `four.xml`. What happens when Engineer A tries to pull from `main`?
+
+A conflict will not be observed on `2.txt`, as its current state reflects main's understanding of the revision history. On `four.xml`, this merge attempt will be interpreted as "making these changes to the deleted file `four.xml`", as the last understanding of the revision history from main's perspective is that `four.xml` no longer exists. In order to resolve this conflict, Engineer A will have to delete `four.xml`, or at least, move it out of the `/bar` push to main, and then move it back into `/bar` and push again. 
+
+
 [Branching Theory I Don't Know Where To Put You Right Now](https://nvie.com/posts/a-successful-git-branching-model/)
 
 
 
-test 111111
-
-
-
-test 33333
->>>>>>> 6250ddf92b7a048b8bf272deeaf91f724cbc1c44
 
