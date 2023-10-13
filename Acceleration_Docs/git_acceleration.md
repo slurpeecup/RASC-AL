@@ -30,12 +30,23 @@ There are ways to hang onto your personal access token for ease of use. One meth
 You should not need to use your PAT to push with this method.
 
 ## Git Essentials
+
+Git allows you to pull a codebase into your own personal workspace, or, `local repository`, in order to develop code without affecting the `remote repository` until you are ready to do so. The Git workflow can be modeled in
+
+### Working Directory
+
+### Staging area
+
+### Local Branch Commits
+
+### Local Branch Commits (Tracking)
+
 ![Git_Staging_Image](/Acceleration_Docs/Acceleration_Doc_Images/nm1w0gnf2zh11.png)
 
 [Git_Branching_Image](link_dfajkdfhlkjahdsljkfhklajdsfhlkjasdfjlkhasdkljfhlakdjfhk)
 
 
-## Conflicts & Conflict Avoidance
+## Conflicts
 
 ![merge_conflcts](/Acceleration_Docs/Acceleration_Doc_Images/Git_Merge_Conflict.png)
 
@@ -44,6 +55,8 @@ Conflicts occur when a branch attempting to merge into or pull from a branch tha
 Another example, let's say Engineer A and Engineer B both pull their project from `main` and work on the same directory, `/bar`. This directory contains three files, `1.md`, `2.txt`, and `four.xml` . Engineer B makes some changes to `2.txt`, then deletes `four.xml` , and pushes to main. In the mean time, Engineer A makes modifications to `four.xml`. What happens when Engineer A tries to pull from `main`?
 
 A conflict will not be observed on `2.txt`, as its current state reflects main's understanding of the revision history. On `four.xml`, this merge attempt will be interpreted as "making these changes to the deleted file `four.xml`", as the last understanding of the revision history from main's perspective is that `four.xml` no longer exists. In order to resolve this conflict, Engineer A will have to delete `four.xml`, or at least, move it out of the `/bar` push to main, and then move it back into `/bar` and push again. 
+
+## Conflict Avoidance
 
 Conflict avoidance is paramount in minimizing headache for yourself and your entire team. Conflict avoidance can be practiced with good team communication and good Git habits. 
 
