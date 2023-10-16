@@ -34,33 +34,37 @@ You should not need to use your PAT to push with this method.
 #### Repository: 
 A place where things are stored. In the case of Git, a remote repository would be where the master version of the code base is stored, ie. `Github` or Bitbucket. A `local repository` is the directory on your file system where the code base is stored.
 
+![Git_Staging_Image](/Acceleration_Docs/Acceleration_Doc_Images/nm1w0gnf2zh11.png)
+
 #### Working Directory:
  In your local repository, the area you are doing work in is called your working directory. This is more of a semantic term, but for example, let's say that your local repository is stored at `/User/Documents/Repo`, and you are doing work constrained within `/User/Documents/Repo/MotorControl`. Your working directory at the time would be `.../Repo/MotorControl`.
 
 #### Snapshots:
-Git `commits` are considered well as snapshots of the code base that refer back to preious revisions. Git commits are each given a unique ID number, which can be used to refer back to that commit. 
+Git `commits` are considered well as snapshots of the code base that refer back to preious revisions. Git commits are each given a unique ID number, which can be used to refer back to a commit of interest. Commits are semi-permanent, and unless there is a reason to delete a set of commits it is not recommended. 
 
-![Git Commit History](https://opensource.com/article/22/11/git-concepts)
+![Git Branch](/Acceleration_Docs/Acceleration_Doc_Images/git-commit-history.png)
 
 #### Staging Area: 
-This is where you stage files for a snapshot, telling Git that the files you have specified are the files of interest. For example, let's say I have three files `1.md`, `2.md`, and `four.txt`. If I just wanted to commit `2.md`, I'd use ```git add 2.md```. We will discuss git commands further in this document.
+The staging area is where you stage, or assign, files to be committed in a snapshot. For example, let's say I have three files `1.md`, `2.md`, and `four.txt`. If I just wanted to commit `2.md`, I would use ```git add 2.md```. That way, modifications to the other two files will not be reflected in this commit. We will discuss git commands further in this document.
 
 #### Push
 
-After staging your target files, you are ready to commit them to a 
-
-![Git_Staging_Image](/Acceleration_Docs/Acceleration_Doc_Images/nm1w0gnf2zh11.png)
+After staging your target files, you are ready to push them, setting them as the head, or most recent, commit for either `main` or a branch of interest. 
 
 It is important to note that files are not phyiscally moved in between these workflow partitions. Moving files between working, staging, and commit changes how Git interacts with them, not how you interact with them physically.
+
+### Branches
+
+Branches in Git are paths away from `main`'s understanding of the revision history, where the structure between 'main' and the branch are shared at the commit in main
 
 #### Local Branch Commits
 
 #### Local Branch Commits (Tracking)
 
-### Branches
-![Git Branch](/Acceleration_Docs/Acceleration_Doc_Images/git-commit-history.png)
 
-Branches in Git are paths away from `main`'s understanding of the revision history, where the structure between 'main' and the branch are shared at the commit in main
+
+## Git Commands
+
 
 ## Conflicts
 
@@ -95,5 +99,4 @@ When you go to merge and a conflict is found, Git will insert **conflict markers
 [Decent git best practices](https://www.freecodecamp.org/news/how-to-use-git-best-practices-for-beginners/#best-practices-for-using-git)
 
 
-
-
+[Git Commit History](https://opensource.com/article/22/11/git-concepts)
