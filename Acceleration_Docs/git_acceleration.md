@@ -58,7 +58,7 @@ It is important to note that files are not phyiscally moved in between these wor
 #### Local Branch Commits (Tracking)
 
 ### Branches
-![Git Branch](/Acceleration_Docs/Acceleration_Doc_Images/Git_Branching.png)
+![Git Branch](/Acceleration_Docs/Acceleration_Doc_Images/git-commit-history.png)
 
 Branches in Git are paths away from `main`'s understanding of the revision history, where the structure between 'main' and the branch are shared at the commit in main
 
