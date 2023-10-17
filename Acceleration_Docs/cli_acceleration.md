@@ -16,6 +16,10 @@ ie. ```cd ../../build/test/results```<br>
 
 ```./```: Run program | ie. ```./mainprogram```. You can run programs in different directories by using the same syntax as cd. ie. ```./../../build/test/test.a```<br>
 
+```Ctrl+C```: Escape key to exit a program running in a terminal.
+
+```&```: After a call to run a program, use ampersand to disown it from the terminal instance it is called in, ie. ```./virtuoso &```.
+
 ```>```: Pipe terminal output to file | ie ``` ./somecommand > targetfile.txt```<br>
 
 ```pwd```: Present working directory - shows what directory you are in.<br>
