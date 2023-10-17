@@ -58,7 +58,7 @@ It is important to note that files are not phyiscally moved in between these wor
 Branches in Git are paths away from `main`'s understanding of the revision history, where the structure between `main` and the branch are shared at a commit relative to `main` or another branch of interest. Branching is useful in compartmentalizing development. For example, one might make a branch to focus on motor control firmware exclusively. This reduces risk in the `main` branch by isolating all changes to the `motor control` branch until the engineer decides it is ready to be merged back to main.
 
 ## Git Commands
-Each command in this list is hyperlinked to Atlassian's Git documentation, as their documentation is easy to read and will provide much more information on the behavior and usage of each command. Working with Git, you will probably still need to google for a specific command if you do not already know what to use (ie. "How to push from local repository to a remote branch"), but this list should still help foster some familiarity with the names & general idea.
+Each command in this list is hyperlinked to Atlassian's Git documentation, as their documentation is easy to read and will provide much more information on the behavior and usage of each command. Working with Git, you will probably still need to google for a specific command if you do not already know what to use (ie. "How to push from local repository to a remote branch"), but this list should still help foster some familiarity with the names & general idea. This is not a comprehensive list, but more of a starting point and a set of commands you will use regularly. 
 
 
 [git init](https://www.atlassian.com/git/tutorials/setting-up-a-repository/git-init) - Creates the `.git` folder in the directory it is called in, initializing a local repository.
@@ -69,29 +69,31 @@ Each command in this list is hyperlinked to Atlassian's Git documentation, as th
 
 [git config](https://www.atlassian.com/git/tutorials/setting-up-a-repository/git-config) - Allows the user to make changes to their Git configuration file either on the global (system wide) level, or the project level. Git config was used in `Getting Started` section of this document.
 
-When you clone the RASC-AL repo, make sure to use `git config credential.helper store` to store your PAT after its first usage. You should not need to enter it again afterwards.
+When you clone the RASC-AL repo, make sure to navigate to the repo folder and call `git config credential.helper store` to store your PAT after its first usage. You should not need to enter it again afterwards in order to push.
 
 [git status](https://www.atlassian.com/git/tutorials/inspecting-a-repository#:~:text=The%20git%20status%20command%20displays,regarding%20the%20committed%20project%20history.) - Gives the user status information on the working directory and staging area of the branch you are currently in.
+
+[git diff](https://www.atlassian.com/git/tutorials/saving-changes/git-diff) - Compare differences between prior commit and current working directory.
 
 [git log](https://www.atlassian.com/git/tutorials/git-log) - Gives the user information on the current commit history of the branch they are in. 
 
 ![Git_Log](/Acceleration_Docs/Acceleration_Doc_Images/Git_Log.png)
 
+[git branch [branch_name]](https://www.atlassian.com/git/tutorials/using-branches) - Create a new branch. `git branch -a` lists all branches. 
+
+[git checkout [branch_name]](https://www.atlassian.com/git/tutorials/using-branches/git-checkout) - Allows you to switch to working in specified branch - `git checkout -b branch_name` will create a branch called "branch_name" AND switch to it.
+
 [git add](https://www.atlassian.com/git/tutorials/saving-changes) - Moves a file to the staging area, called as `git add [filename]`. To add all files in the current directory to the staging area, use a period as the argument for filename.
 
 [git commit](https://www.atlassian.com/git/tutorials/saving-changes/git-commit) -  Commits a "snapshot" of the all changes in the staging area. Commits usually require a message, when you can add with the -m argument, ie. `git commit -m "hello shmello"`. The `-a` argument allows you to commit all changes in the **working directory** - without adding all changes to the staging area first. `git commit --amend` will modify the contents of the most recent commit instead of making a new commit. **Its use can be dangerous**, and I do not recommend calling a commit amend. If you do need to use it, only use it in a local branch and **NEVER ** EVER EVER ** USE IT IN MAIN**. It is very liable to cause a merge conflict for dependent branches, and should only be used in dependent branches.
 
-[git push](https://www.atlassian.com/git/tutorials/syncing/git-push) - 
+[git push](https://www.atlassian.com/git/tutorials/syncing/git-push) - Git push will set the most recent commit to `HEAD` of the target branch. **In the RASC-AL repo, do not use --force**, no matter what.
 
-[git pull](https://www.atlassian.com/git/tutorials/syncing/git-pull) - 
+[git pull](https://www.atlassian.com/git/tutorials/syncing/git-pull) - Git pull downloads & updates the most recent commit from the target branch. If pulling from a remote branch, use `git pull remote`. **DO NOT REBASE** without explicitly knowing what you are doing.
 
-[git fetch](https://www.atlassian.com/git/tutorials/syncing/git-fetch#:~:text=In%20review%2C%20git%20fetch%20is,the%20state%20of%20a%20remote.) - 
+[git fetch](https://www.atlassian.com/git/tutorials/syncing/git-fetch#:~:text=In%20review%2C%20git%20fetch%20is,the%20state%20of%20a%20remote.) - Downloads remote contents without pulling. This is considered to be the safer version of pulling, and is used in conjunction with other commands to update the local repo. Read the Atlassian documentation for more info.
 
-[git checkout [branch_name]](https://www.atlassian.com/git/tutorials/using-branches/git-checkout) - 
-
-[git reset](https://www.atlassian.com/git/tutorials/undoing-changes/git-reset#:~:text=To%20review%2C%20git%20reset%20is,correspond%20to%20the%20three%20trees.) - 
-
-[git revert](https://www.atlassian.com/git/tutorials/undoing-changes/git-revert) - 
+[git reset](https://www.atlassian.com/git/tutorials/undoing-changes/git-reset#:~:text=To%20review%2C%20git%20reset%20is,correspond%20to%20the%20three%20trees.) - Reset a branch to a specified commit index. This is useful when you want to undo all changes to your working directory or need to do so to resolve a merge conflict.
 
 ## Conflicts
 
