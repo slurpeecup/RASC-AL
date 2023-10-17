@@ -32,7 +32,7 @@ You should not need to use your PAT to push with this method.
 ## Git Essentials
 
 #### Repository: 
-A place where things are stored. In the case of Git, a remote repository would be where the master version of the code base is stored, ie. `Github` or Bitbucket. A `local repository` is the directory on your file system where the code base is stored.
+A place where things are stored. In the case of Git, a remote repository would be where the master version of the code base is stored, ie. `Github` or Bitbucket. A `local repository` is the directory on your file system where the code base is stored. You can make initalize a copy of a repository on your system by `cloning` it.
 
 ![Git_Staging_Image](/Acceleration_Docs/Acceleration_Doc_Images/nm1w0gnf2zh11.png)
 
@@ -55,16 +55,41 @@ It is important to note that files are not phyiscally moved in between these wor
 
 ### Branches
 
-Branches in Git are paths away from `main`'s understanding of the revision history, where the structure between 'main' and the branch are shared at the commit in main
-
-#### Local Branch Commits
-
-#### Local Branch Commits (Tracking)
-
-
+Branches in Git are paths away from `main`'s understanding of the revision history, where the structure between `main` and the branch are shared at a commit relative to `main` or another branch of interest. Branching is useful in compartmentalizing development. For example, one might make a branch to focus on motor control firmware exclusively. This reduces risk in the `main` branch by isolating all changes to the `motor control` branch until the engineer decides it is ready to be merged back to main.
 
 ## Git Commands
+Each command in this list is hyperlinked to Atlassian's Git documentation, as their documentation is easy to read and will provide much more information on the behavior and usage of each command. Working with Git, you will probably still need to google for a specific command if you do not already know what to use (ie. "How to push from local repository to a remote branch"), but this list should still help foster some familiarity with the names & general idea.
 
+
+[git init](https://www.atlassian.com/git/tutorials/setting-up-a-repository/git-init) - Creates the `.git` folder in the directory it is called in, initializing a local repository.
+
+[git remote](https://www.atlassian.com/git/tutorials/syncing) - Allows interfacing with remote repositories. For example, using `git remote -v` will list all remote repositories.
+
+[git clone [repo]](https://www.atlassian.com/git/tutorials/setting-up-a-repository/git-clone) - Clones a Git repository into the directory it is called in. You can specify a target directory as an argument, calling as `git clone [repo] [directory]`. 
+
+[git config](https://www.atlassian.com/git/tutorials/setting-up-a-repository/git-config) - Allows the user to make changes to their Git configuration file either on the global (system wide) level, or the project level. Git config was used in `Getting Started` section of this document.
+
+[git status](https://www.atlassian.com/git/tutorials/inspecting-a-repository#:~:text=The%20git%20status%20command%20displays,regarding%20the%20committed%20project%20history.) - Gives the user status information on the working directory and staging area of the branch you are currently in.
+
+[git log](https://www.atlassian.com/git/tutorials/git-log) - Gives the user information on the current commit history of the branch they are in. 
+
+![Git_Log](/Acceleration_Docs/Acceleration_Doc_Images/Git_Log.png)
+
+[git add](https://www.atlassian.com/git/tutorials/saving-changes) - Moves a file to the staging area, called as `git add [filename]`. To add all files in the current directory to the staging area, use a period as the argument for filename.
+
+[git commit]() - 
+
+[git push]() - 
+
+[git pull]() - 
+
+[git fetch]() - 
+
+[git checkout [branchname]]() - 
+
+[git reset]() - 
+
+[git revert]() - 
 
 ## Conflicts
 
