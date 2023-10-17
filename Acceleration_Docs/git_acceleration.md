@@ -77,19 +77,19 @@ Each command in this list is hyperlinked to Atlassian's Git documentation, as th
 
 [git add](https://www.atlassian.com/git/tutorials/saving-changes) - Moves a file to the staging area, called as `git add [filename]`. To add all files in the current directory to the staging area, use a period as the argument for filename.
 
-[git commit]() - 
+[git commit](https://www.atlassian.com/git/tutorials/saving-changes/git-commit) -  Commits a "snapshot" of the all changes in the staging area. Commits usually require a message, when you can add with the -m argument, ie. `git commit -m "hello shmello"`. The `-a` argument allows you to.
 
-[git push]() - 
+[git push](https://www.atlassian.com/git/tutorials/syncing/git-push) - 
 
-[git pull]() - 
+[git pull](https://www.atlassian.com/git/tutorials/syncing/git-pull) - 
 
-[git fetch]() - 
+[git fetch](https://www.atlassian.com/git/tutorials/syncing/git-fetch#:~:text=In%20review%2C%20git%20fetch%20is,the%20state%20of%20a%20remote.) - 
 
-[git checkout [branchname]]() - 
+[git checkout [branch_name]](https://www.atlassian.com/git/tutorials/using-branches/git-checkout) - 
 
-[git reset]() - 
+[git reset](https://www.atlassian.com/git/tutorials/undoing-changes/git-reset#:~:text=To%20review%2C%20git%20reset%20is,correspond%20to%20the%20three%20trees.) - 
 
-[git revert]() - 
+[git revert](https://www.atlassian.com/git/tutorials/undoing-changes/git-revert) - 
 
 ## Conflicts
 
