@@ -69,7 +69,7 @@ Each command in this list is hyperlinked to Atlassian's Git documentation, as th
 
 [git config](https://www.atlassian.com/git/tutorials/setting-up-a-repository/git-config) - Allows the user to make changes to their Git configuration file either on the global (system wide) level, or the project level. Git config was used in `Getting Started` section of this document.
 
-When you clone the RASC-AL repo, make sure to use `git config credential.helper store` to store your PAT after its first usage.
+When you clone the RASC-AL repo, make sure to use `git config credential.helper store` to store your PAT after its first usage. You should not need to enter it again afterwards.
 
 [git status](https://www.atlassian.com/git/tutorials/inspecting-a-repository#:~:text=The%20git%20status%20command%20displays,regarding%20the%20committed%20project%20history.) - Gives the user status information on the working directory and staging area of the branch you are currently in.
 
