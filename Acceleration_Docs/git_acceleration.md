@@ -69,6 +69,8 @@ Each command in this list is hyperlinked to Atlassian's Git documentation, as th
 
 [git config](https://www.atlassian.com/git/tutorials/setting-up-a-repository/git-config) - Allows the user to make changes to their Git configuration file either on the global (system wide) level, or the project level. Git config was used in `Getting Started` section of this document.
 
+When you clone the RASC-AL repo, make sure to use `git config credential.helper store` to store your PAT after its first usage.
+
 [git status](https://www.atlassian.com/git/tutorials/inspecting-a-repository#:~:text=The%20git%20status%20command%20displays,regarding%20the%20committed%20project%20history.) - Gives the user status information on the working directory and staging area of the branch you are currently in.
 
 [git log](https://www.atlassian.com/git/tutorials/git-log) - Gives the user information on the current commit history of the branch they are in. 
@@ -77,7 +79,7 @@ Each command in this list is hyperlinked to Atlassian's Git documentation, as th
 
 [git add](https://www.atlassian.com/git/tutorials/saving-changes) - Moves a file to the staging area, called as `git add [filename]`. To add all files in the current directory to the staging area, use a period as the argument for filename.
 
-[git commit](https://www.atlassian.com/git/tutorials/saving-changes/git-commit) -  Commits a "snapshot" of the all changes in the staging area. Commits usually require a message, when you can add with the -m argument, ie. `git commit -m "hello shmello"`. The `-a` argument allows you to.
+[git commit](https://www.atlassian.com/git/tutorials/saving-changes/git-commit) -  Commits a "snapshot" of the all changes in the staging area. Commits usually require a message, when you can add with the -m argument, ie. `git commit -m "hello shmello"`. The `-a` argument allows you to commit all changes in the **working directory** - without adding all changes to the staging area first. `git commit --amend` will modify the contents of the most recent commit instead of making a new commit. **Its use can be dangerous**, and I do not recommend calling a commit amend. If you do need to use it, only use it in a local branch and **NEVER ** EVER EVER ** USE IT IN MAIN**. It is very liable to cause a merge conflict for dependent branches, and should only be used in dependent branches.
 
 [git push](https://www.atlassian.com/git/tutorials/syncing/git-push) - 
 
