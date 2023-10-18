@@ -22,6 +22,8 @@ ie. ```cd ../../build/test/results```<br>
 
 ```>```: Pipe terminal output to file | ie ``` ./somecommand > targetfile.txt```<br>
 
+```>>```: Append output to the end of a file | ie. ``` ./somecommand >> targetfile.txt```<br>
+
 ```pwd```: Present working directory - shows what directory you are in.<br>
 
 ```mkdir```: Make directory | ie. ```mkdir test_folder```<br>
