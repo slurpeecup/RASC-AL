@@ -14,7 +14,11 @@ If you do not already have Git, you need to install it.
  * For Windows devices, install Git from [here](https://git-scm.com/download/win).
  * On MacOS 10.9 and higher, you will be prompted to install Git upon the first time you try to execute Git from the terminal. Use ```$ git --version``` to verify or prompt for installation.
  * On Linux, use ```sudo apt install git-all install-info``` from your command line.
-You will also need to make an account on [github.com](https://github.com/). To push to Git from the CLI, you will also need a personal access token. In order to create one, go to Settings > Developer Settings > Personal Access Tokens > Tokens Classic on Github, then click "Generate New Token" near to top of the page. Make a quick not describing what this token is for, select the access perms you need to give this token (usually just repo for the case of the project), and then click "Generate Token" at the bottom of the screen. Save this token somewhere permanent, as you will only be able to see it until you close the window. **You will not be able to see this token on Github again**.
+You will also need to make an account on [github.com](https://github.com/). 
+
+To push to Github from the CLI (and really, from a local repository in general), you will also need a personal access token. In order to create one, go to `Settings > Developer Settings > Personal Access Tokens > Tokens Classic` on Github, then click "Generate New Token" near the top of the page. Make a quick note describing what this token is for, select the access perms you need to give this token (for the case of this project, just `repo` is fine), and then click "Generate Token" at the bottom of the screen. 
+
+Save this token somewhere permanent, as you will only be able to see it until you close the window. **You will not be able to see this token on Github again**.
 
 In order to set up your git credentials to be able to push, you need to set a user email and password. To do so, use: 
 
