@@ -40,14 +40,14 @@ ie. ```cd ../../build/test/results```.
 
 ```&&```: Run command and next command if prior is successful | ie. ```mkdir a && cd a && cd .. && rmdir a``` .
 
-```||```: Run command and next command regardless of prior success | ie. ```sudo apt install aplay || sudo apt install inkscape``` .(aplay will fail, inkscape will still install)
+```||```: Run command and next command regardless of prior success | ie. ```sudo apt install aplay || sudo apt install inkscape```. (aplay will fail, inkscape will still install)
 
 ```/.```: Hidden file or dir. The focus here is on the ```.``` in front of the subject | ie. ```cd ~/.hiddenfolder || nano .hiddenfile```.
 
 While we're here... doing things with folder and file names that have spaces
 is really annoying. 
 
-By default, the terminal will use the " " character as a delimiter. If you need to do this, the name of the target must be wrapped in quotes, ie. ```"rmdir "test file"``` or ```rmdir `test file`"```.
+By default, the terminal will use the " " character as a delimiter. If you need to do this, the name of the target must be wrapped in quotes, ie. ```"rmdir "test file"``` or ```rmdir `test file` ```.
 
 Aliases: In the .bashrc file, you can instantiate custom shortcuts for commands called aliases. ```alias ="cd ~/Documents/Vivado && ./vivado2022.4```.
 
