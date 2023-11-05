@@ -15,6 +15,7 @@ For more information, read the documentation on man7.org, or a command's respect
 can move up a directory using ```".."```,and can chain directories by delimiting with ```/```; 
 ie. ```cd ../../build/test/results```.
 
+```grep```: Global RegEx Print - Print search results from a query within files or directory. A simple `grep` search may look like: `grep fizzbuzz assignments.txt`. You can also feed regular expressions (RegEx) to a grep search as a query. 'grep' searches and regex are a complex topic beyond the scope of this document. More information can be found [here] and in the man7.org documentation.
 
 ```./```: Run program | ie. ```./mainprogram```. You can run programs in different directories by using the same syntax as cd. For example, ```./../../build/test/test.a```.
 
@@ -90,14 +91,15 @@ Bash scripting allows you to package multiple commands into a single script that
 A critical command to know for running multiple processes from a bash script is ```disown```. Read more [here](https://phoenixnap.com/kb/disown-command-linux).
 
 Every bash script starts with ```#!bin/bash/```
-Subsequent scripts will follow. Here is an example of a simple one.
+Subsequent shell commands follow from there. Here is an example of a simple one that opens a file as root user in one directory, then runs a python script in another directory, then echoes a message to its home console.
 ```
 #!/bin/bash
+
 sudo thunar /usr/local/share/'older plus themes'/WINDOWS/Resources/Themes &
-cd /home/slurpeecup/Downloads/Chicago95/Plus
-./PlusGUI.py &
+bash /home/slurpeecup/Downloads/Chicago95/PlusGUI.py &
+echo "Opened Themes and started Plus! GUI"
 ```
-Learn more on bash scripting at the [bash scripting cheatsheet](https://devhints.io/bash).
+Learn more on bash scripting at [bash scripting cheatsheet](https://devhints.io/bash) and [art of shell scripting](https://tldp.org/LDP/abs/html/).
 
 ## Conclusion
 Okay, now that you've got some background, play one of these three games. They're designed to give you more famililarity with CLI interfaces.<br>
