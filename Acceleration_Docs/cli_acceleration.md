@@ -9,19 +9,18 @@ For more information, read the documentation on man7.org, or a command's respect
 
 `Command Line Arguments`: Called when a command is executed, appended after the name, these are arguments passed to the command in the sense of a function, where the argument may toggle a flag or pass a value to the command. For example, `apt -h` will give you info on the other arguments `apt` can be called with. You can also chain arguments together. For example, if I wanted to use the `-f`, `-x`, and `-z` arguments when calling the command `inxi`, I could use `inxi -fxz`.
 
-```ls```: List - show me what is in the current directory. ```-a``` will show hidden files. <
+```ls```: List - lists the contents of the current directory. ```-a``` will show hidden files. <
 
-```cd```: Change directory - move to a new folder. You can move to any directory from anywhere in your terminal if you specify the top level directory from either the system root ```"/"``` or system home ```"~/"```, ie ```"cd ~/"```. You 
-can move up a directory using ```".."```,and can chain directories by delimiting with ```/```; 
-ie. ```cd ../../build/test/results```.
+```cd```: Change Directory - change directory to a target folder. You can move to any directory from anywhere in your terminal if you specify the top level directory from either the system root ```"/"``` or system home ```"~/"```, ie ```"cd ~/"```. You can move up a directory using ```".."```, and can chain directories by delimiting with ```/```, ie. ```cd ../../build/test/results```.
 
-```grep```: Global RegEx Print - Print search results from a query within files or directory. A simple `grep` search may look like: `grep fizzbuzz assignments.txt`. You can also feed regular expressions (RegEx) to a grep search as a query. 'grep' searches and regex are a complex topic beyond the scope of this document. More information can be found [here] and in the man7.org documentation.
 
 ```./```: Run program | ie. ```./mainprogram```. You can run programs in different directories by using the same syntax as cd. For example, ```./../../build/test/test.a```.
 
-```Ctrl+C```: Escape key to exit a program running in a terminal.
+```Ctrl+C```: Escape key - exit a program running in a terminal.
 
 ```&```: After a call to run a program, use ampersand to disown it from the terminal instance it is called in, ie. ```./virtuoso &```.
+
+```*```: Sometimes used as a stand-in for "all", like ```mv /* ~/Documents/NewFolder```
 
 ```>```: Pipe terminal output to file | ie ``` ./somecommand > targetfile.txt```.
 
@@ -29,11 +28,11 @@ ie. ```cd ../../build/test/results```.
 
 ```pwd```: Present working directory - shows what directory you are in.
 
-```mkdir```: Make directory | ie. ```mkdir test_folder```.
+```mkdir```: Make target directory | ie. ```mkdir test_folder```.
 
-```rmdir```: Remove directory | ie. ```rmdir test_folder``` ! directory must be empty unless using ```-f``` argument.
+```rmdir```: Remove target directory | ie. ```rmdir test_folder``` ! directory must be empty unless using ```-f``` argument.
 
-```touch```: Create a file | ie. ```"touch filename.f"```.
+```touch```: Creates a file | ie. ```"touch filename.f"```.
 
 ```nano```: GNU nano text editor. Calling nano on a non-existent file will create it. For example, `nano newfile.txt`. 
 
@@ -45,8 +44,7 @@ ie. ```cd ../../build/test/results```.
 
 ```/.```: Hidden file or dir. The focus here is on the ```.``` in front of the subject | ie. ```cd ~/.hiddenfolder || nano .hiddenfile```.
 
-While we're here... doing things with folder and file names that have spaces
-is really annoying. 
+While we're here... doing things with folder and file names that have spaces is really annoying. 
 
 By default, the terminal will use the " " character as a delimiter. If you need to do this, the name of the target must be wrapped in quotes, ie. ```"rmdir "test file"``` or ```rmdir `test file` ```.
 
@@ -60,19 +58,16 @@ The following commands require sudo permissions. To run a command with sudo, cal
 
 ```source```: Refreshes the file for programs dependent upon it. If I add an alias to ```.bashrc```, then I will need to run ```source ~/.bashrc``` to use that alias. 
 
-```chmod```: Change permissions. ```(+-)rwx read write execute```. ie. ```sudo chmod -x+w setup.sh```.
+```chmod```: Change permissions of a target You can view permissions with `ls -l`. Example permissions: ```(+-)rwx read write execute```. ie. ```sudo chmod -x+w setup.sh```.
 
-```dpkg```: Manual package management from .deb. -i installs, -r removes, ie. ```sudo dpkg -i package.deb```.
+```dpkg```: Manual package management from .deb. Commandline args: -i installs, -r removes, ie. ```sudo dpkg -i package.deb```.
 
 ```tar```: Unpack contents of a tar archive. Read more on tar [here](https://www.geeksforgeeks.org/tar-command-linux-examples/).
 
 
 ### apt
 
-```apt``` is the default package manager on Debian based systems, Debian being a
-very common Linux distribution for other distros to base off of. The OS on the
-RPI4s and the Orin are Raspberry Pi OS and Jetpack 5, both based on Debian.
-Taking this a step further, Jetpack 5 is based on Ubuntu 20, which is Debian based.
+```apt``` is the default package manager on Debian based systems, Debian being a very common Linux distribution for other distros to base off of. The OS on the RPI4s and the Orin are Raspberry Pi OS and Jetpack 5, both based on Debian. Taking this a step further, Jetpack 5 is based on Ubuntu 20, which is Debian based.
 
 Some common ```apt``` commands you will use are ```install```, ```remove```, ```update```, ```upgrade```. You will come across many more as you comb through forum posts. You don't have to remember them all, but understanding what they do is helpful sometimes.
 
