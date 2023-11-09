@@ -13,6 +13,11 @@ For more information, read the documentation on man7.org, or a command's respect
 
 ```cd```: Change Directory - change directory to a target folder. You can move to any directory from anywhere in your terminal if you specify the top level directory from either the system root ```"/"``` or system home ```"~/"```, ie ```"cd ~/"```. You can move up a directory using ```".."```, and can chain directories by delimiting with ```/```, ie. ```cd ../../build/test/results```.
 
+```mv```: Move - move target from directory to target directory ie. ```mv /Downloads/shmello.jpg ~/Documents/Wallpapers```
+
+```cp```: Copy - copy target from directory to target directory, ie. ```cp ~/Downloads/shmello.jpg ~/Documents/Cat_Photos```
+
+```grep```: Global RegEx Print - Print search results from a query within files or directory. A simple `grep` search may look like: `grep fizzbuzz assignments.txt`. You can also feed regular expressions (RegEx) to a grep search as a query. 'grep' searches and regex are a complex topic beyond the scope of this document. More information can be found [here] and in the man7.org documentation.
 
 ```./```: Run program | ie. ```./mainprogram```. You can run programs in different directories by using the same syntax as cd. For example, ```./../../build/test/test.a```.
 
