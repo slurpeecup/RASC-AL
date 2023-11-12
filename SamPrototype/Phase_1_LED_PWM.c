@@ -9,7 +9,6 @@
 
 #include <avr/io.h>
 #include <time.h>
-#include <avr/interrupt.h>
 
 void init()
 {
