@@ -29,6 +29,6 @@ int main(void)
 	init();
 	timer_0_init();
 
-    while (1){}
+    while(1){}
 }
 
