@@ -12,14 +12,14 @@
 
 void init()
 {
-	DDRD  |= (1<<DDD5) | (1<<DDD6); //Enable pin outputs D5 and D6
-	PORTD |= (1<<5) | (1<<6);
+	DDRD  |= (1<<DDD5 | 1<<DDD6); //Enable pin outputs D5 and D6
+	PORTD |= (1<<PORTD5 | 1<<PORTD6);
 }
 
 void timer_0_init()
 {
-	TCCR0A |= (1<<WGM00) | (1<<WGM01) | (1<<COM0A1); //Enable Fast PWM for Timer0 LED
-	TCCR0B |= (1<<WGM02) | (1<<CS00) | (1<<CS02); //Pre-Scale to 1024
+	TCCR0A |= (1<<WGM00 | 1<<WGM01 | 1<<COM0A1 | 1<<COM0B1); //Enable Fast PWM for Timer0 LED
+	TCCR0B |= (1<<CS00 | 1<<CS02); //Pre-Scale to 1024
 	OCR0A = 77; //30% duty cycle of pre-scale
 	OCR0B = 179; //70% duty cycle of pre-scale
 }
@@ -28,7 +28,7 @@ int main(void)
 {	
 	init();
 	timer_0_init();
-
-    while(1){}
+	
+    	while(1){}
 }
 
