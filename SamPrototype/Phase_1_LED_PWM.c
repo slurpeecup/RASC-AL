@@ -10,13 +10,13 @@
 #include <avr/io.h>
 #include <time.h>
 
-void init()
+void pin_init()
 {
 	DDRD  |= (1<<DDD5 | 1<<DDD6); //Enable pin outputs D5 and D6
 	PORTD |= (1<<PORTD5 | 1<<PORTD6);
 }
 
-void timer_0_init()
+void timer0_init()
 {
 	TCCR0A |= (1<<WGM00 | 1<<WGM01 | 1<<COM0A1 | 1<<COM0B1); //Enable Fast PWM for Timer0 LED
 	TCCR0B |= (1<<CS00 | 1<<CS02); //Pre-Scale to 1024
@@ -26,8 +26,8 @@ void timer_0_init()
 
 int main(void)
 {	
-	init();
-	timer_0_init();
+	pin_init();
+	timer0_init();
 	
     	while(1){}
 }
