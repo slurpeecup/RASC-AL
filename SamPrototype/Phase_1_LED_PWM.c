@@ -18,7 +18,7 @@ void pin_init()
 
 void timer0_init()
 {
-	TCCR0A |= (1<<WGM00 | 1<<WGM01 | 1<<COM0A1 | 1<<COM0B1); //Enable Fast PWM for Timer0 LED
+	TCCR0A |= (1<<COM0A1 | 1<<COM0B1 | 1<<WGM00 | 1<<WGM01); //Enable Fast PWM for Timer0 LED
 	TCCR0B |= (1<<CS00 | 1<<CS02); //Pre-Scale to 1024
 	OCR0A = 77; //30% duty cycle of pre-scale
 	OCR0B = 179; //70% duty cycle of pre-scale
