@@ -1,0 +1,2 @@
+#ignore Zaid's AVR toolchain configs for VSCode.
+.vscode
