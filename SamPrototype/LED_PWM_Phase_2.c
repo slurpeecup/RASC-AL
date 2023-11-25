@@ -72,21 +72,21 @@ void set_led0_dim() // This function should do the same as LED0, but in the oppo
 {
   	static uint8_t ON_FLAG = 0U; //Ensures user is not holding the button
   	if (OCR0A > 245) OCR0A = 255;
-  	if (OCR0A < 10)  OCR0A = 0;     //Set upper and lower bounds
+  	if (OCR0A < 10)  OCR0A = 0;   
 	
-	if(!(PINC & (1<<1)) && ON_FLAG == 0) //When button is pressed, increment the duty var till equal to 255. This brightens the LED.
+	if(!(PINC & (1<<1)) && ON_FLAG == 0)
 	{
 		FFmSDELAY();
 	  	if(OCR0A <= 255 && OCR0A >= 10)
 	  	{
-	    		OCR0A-=10;			 	//Discrete step of roughly 2%
+	    		OCR0A-=10;
 	    		ON_FLAG++;
 	  	}
 	}
   	else ON_FLAG--;
 }
 
-void set_led1_bright() //Same as LED 0
+void set_led1_bright() //Same as LED 0 Brightness
 {
 	static uint8_t ON_FLAG = 0U;
   	if (OCR0B > 245) OCR0B = 255;
@@ -97,14 +97,14 @@ void set_led1_bright() //Same as LED 0
 		FFmSDELAY();
 		if(OCR0B <= 245 && OCR0B >= 0)
 	 	{
-	    		OCR0B+=10;				//Discrete step of roughly 2%
+	    		OCR0B+=10;
 	    		ON_FLAG++;
 	  	}
 	} 
   	else ON_FLAG--;
 }
 
-void set_led1_dim() //Same as LED 0
+void set_led1_dim() //Same as LED 0 Dimness
 {
 	static uint8_t ON_FLAG = 0U;
 	if (OCR0B > 245) OCR0B = 255;
@@ -116,7 +116,7 @@ void set_led1_dim() //Same as LED 0
 		if(OCR0B <= 255 && OCR0B >= 10)
 	 	{
 	    		OCR0B-=10;
-	    		ON_FLAG++;                                              //Discrete step of roughly 2%
+	    		ON_FLAG++;
 		}
 	} 
 	else ON_FLAG--;
@@ -126,7 +126,7 @@ void set_led2() //Same as previous LEDs, but this one is combined increment/decr
 {
 	static uint8_t ON_FLAG = 0U;
 	if (OCR2A > 245) OCR2A = 255;
-	if (OCR2A < 10)  OCR2A = 0;     //set upper and lower bounds
+	if (OCR2A < 10)  OCR2A = 0;
 	
 	if ((!(PINC & (1<<0)) && ON_FLAG == 0))
   	{
