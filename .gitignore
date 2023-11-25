@@ -1,2 +1,8 @@
 #ignore Zaid's AVR toolchain configs for VSCode.
 .vscode
+
+#ignore garbage output from Motor_Control make
+
+/Motor_Control/*.elf
+/Motor_Control/*.map
+/Motor_Control/*.o
