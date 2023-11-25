@@ -138,7 +138,7 @@ void set_led2() //Same as previous LEDs, but this one is combined increment/decr
    		}
   	}
 	
-  if(!(PINC & (1<<1)) && ON_FLAG == 0) //When button is pressed, increment the duty var till equal to 255. This brightens the LED.
+  if(!(PINC & (1<<1)) && ON_FLAG == 0)
   {
 	FFmSDELAY();
 	if(OCR2A <= 255U && OCR2A >= 10U)
