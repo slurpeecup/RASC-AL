@@ -32,10 +32,10 @@ void OmSDELAY()
 }
 void pin_init()
 {
-	DDRC  &= ~(1<<DDC0 | 1<<DDC1 | 1<<DDC2 | 1<<DDC3);					//Enable pin inputs C0, C1, and C2 for buttons 
-																		//PC0 controls increment up, PC1 controls decrement, PC2 controls toggle, reads +5 or 0v													         
-	PORTC |= (31<<0);						                            //Pull-up resistance for buttons
-	DDRD  |= (1<<DDD5 | 1<<DDD6);										//Enable pin outputs D5 and D6 for LEDs
+	DDRC  &= ~(1<<DDC0 | 1<<DDC1 | 1<<DDC2 | 1<<DDC3);	//Enable pin inputs C0, C1, and C2 for buttons 
+								//PC0 controls increment up, PC1 controls decrement, PC2 controls toggle, reads +5 or 0v													         
+	PORTC |= (31<<0);					//Pull-up resistance for buttons
+	DDRD  |= (1<<DDD5 | 1<<DDD6);				//Enable pin outputs D5 and D6 for LEDs
 	PORTD |= (1<<PORTD5 | 1<<PORTD6);
 
 	DDRB  |= (1<<DDB1 | 1 << DDB2 | 1<<DDB3);
@@ -58,7 +58,7 @@ void timer1_init()
 	ICR1L = ICR1MAX && 0x00FF;
 }
 
-void SERVO_PAN()
+void servo_pan()
 {
 	uint8_t ON_FLAG = 0U;
 		static uint16_t OCR1B_TOTAL = T1MIN;
@@ -82,20 +82,70 @@ void SERVO_PAN()
 		else OCR1B_TOTAL -= 1;
 }
 
+void servo_tilt_0()
+{
+	static uint8_t ON_FLAG = 0U; // make sure user is not holding the button 
+	static uint16_t OCR1B_TOTAL = T1MIN;	
+	
+	if (OCR1B_TOTAL > T1MAX)  OCR1B_TOTAL = T1MAX;
+	if (OCR1B_TOTAL < T1MIN)  OCR1B_TOTAL = T1MIN;     //Set upper and lower bounds
+
+
+	if(!(PINC & (1<<0)) && ON_FLAG == 0) //When button is pressed, increment the duty var till equal to 255. This brightens the LED.
+	{
+			FFmSDELAY();
+			if(OCR1B <= T1MAX && OCR1B >= T1MIN)
+			{
+				OCR1B += 100U;
+				ON_FLAG++;                   //Discrete step of roughly ?%
+			}
+	}
+	else ON_FLAG--;
+}
+
+void servo_tilt_1()
+{
+	static uint8_t ON_FLAG = 0U; //Make sure user is not holding the button
+	
+	if (OCR1B > T1MAX) OCR1B = T1MAX;
+	if (OCR1B < T1MIN) OCR1B = T1MIN;     //Set upper and lower bounds
+	
+	if(!(PINC & (1<<1)) && ON_FLAG == 0) //When button is pressed, increment the duty var till equal to 255.
+	{
+		FFmSDELAY();
+			if(OCR1B <= T1MAX && OCR1B >=T1MIN)
+			{
+				OCR1B -= 100U;					 //Discrete step of roughly ?
+				ON_FLAG++;       
+			}
+	} 
+	else ON_FLAG--;
+}
+
+void PAN_LED_CTL()
+{
+	servo_pan();
+}
+
+void TILT_LED_CTL()
+{
+	servo_tilt_0();
+	servo_tilt_1();		
+}
+
 int main(void)
 {
-	pin_init();						//Call initializations
+	pin_init();		//Call initializations
 	timer1_init();
 		
 	while (1)
 	{	 
 		if(!(PINC & (1<<2)))        //If toggle low     
 		{
-//			_delay_ms(25);			//Debounce time
 			if(!(PINC & (1<<2)))    //Toggle is really low
 			{
 		//		TILT_LED_CTL();
-				SERVO_PAN();
+				servo_pan();
 			} 
 		}
 	//	else //PAN_LED_CTL();
