@@ -89,8 +89,8 @@ void set_led0_dim() // This function should do the same as LED0, but in the oppo
 void set_led1_bright() //Same as LED 0
 {
 	static uint8_t ON_FLAG = 0U;
-  	if (OCR0B >245) OCR0B = 255;
-  	if (OCR0B <10)  OCR0B = 0;
+  	if (OCR0B > 245) OCR0B = 255;
+  	if (OCR0B < 10)  OCR0B = 0;
 
   	if(!(PINC & (1<<1)) && ON_FLAG == 0)
 	{
@@ -107,10 +107,10 @@ void set_led1_bright() //Same as LED 0
 void set_led1_dim() //Same as LED 0
 {
 	static uint8_t ON_FLAG = 0U;
-	if (OCR0B >245) OCR0B = 255;
-	if (OCR0B <10)  OCR0B = 0;
+	if (OCR0B > 245) OCR0B = 255;
+	if (OCR0B < 10)  OCR0B = 0;
 
-	if(!(PINC & (1<<0))&& ON_FLAG == 0)
+	if(!(PINC & (1<<0)) && ON_FLAG == 0)
 	{
 		FFmSDELAY();
 		if(OCR0B <= 255 && OCR0B >= 10)
