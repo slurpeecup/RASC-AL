@@ -21,8 +21,8 @@ void USART_TRANSMIT(char data) {
 }
 
 void PIN_INIT() {
-    DDRB |= (1 << DDB1 | 1 << DDB2 | 1 << DDB3);
-    PORTB |= (1 << PORTB1 | 1 << PORTB2 | 1 << PORTB3);
+    DDRB |= (1<< DDB0 | 1 << DDB1 | 1 << DDB2 | 1 << DDB3);
+    PORTB |= (1 << DDB0 | 1 << PORTB1 | 1 << PORTB2 | 1 << PORTB3);
 }
 
 void TIMER0_INIT() {
@@ -68,7 +68,11 @@ ISR(USART_RX_vect, ISR_BLOCK) {
         USART_TRANSMIT(data);
         if (OCR1B > (S2MIN + 50))
             OCR1B -= 50;
+    } else if (data == 'Q' || data == 'q') {
+        USART_TRANSMIT(data);
+        PORTB ^= 1 << PORTB0;
     }
+    
 
     sei(); // Re-enable interrupts upon completion of ISR
 }
