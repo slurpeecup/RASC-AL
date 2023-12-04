@@ -7,9 +7,9 @@
 #include <util/delay.h>
 
 #define S1MAX    5000U
-#define S1MIN    1500U
+#define S1MIN     1500U
 #define S2MAX    5000U
-#define S2MIN    1500U
+#define S2MIN     500U
 #define TENmS     156U
 #define BAUD9600  103U
 #define ICR1MAX 50000U

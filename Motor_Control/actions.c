@@ -21,9 +21,10 @@ void USART_TRANSMIT(char data) {
 }
 
 void PIN_INIT() {
-    DDRB |= (1<< DDB0 | 1 << DDB1 | 1 << DDB2 | 1 << DDB3);
+    DDRB  |= (1<< DDB0 | 1 << DDB1 | 1 << DDB2 | 1 << DDB3);
     PORTB |= (1 << DDB0 | 1 << PORTB1 | 1 << PORTB2 | 1 << PORTB3);
-}
+    PORTB &= ~(1<<PORTB0);
+}   
 
 void TIMER0_INIT() {
     // TIMSK0 |= (3 << 1); // Enable OCIE0A, OCIE0B interrupts
