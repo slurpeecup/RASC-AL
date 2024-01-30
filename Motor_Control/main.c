@@ -2,38 +2,38 @@
  * Stepper Motor Comms.c
  * Created: 1/23/2024 5:10:52 PM
  * Author : RASCGULLS
- */ 
+ */
+
+//36kHz appears to be upper echelon of motor. 22 Volts will pull up to 5kHz
 
 #define F_CPU 16000000UL
-#define BAUD 9600
+#define BAUD 115200
 #define BAUDRATE ((F_CPU)/(BAUD*16UL)-1)
-#define FORWARD 0
-#define REVERSE 1
+#define CCW 0
+#define CW 1
 
 #include <avr/io.h>
 #include <stdlib.h>
 #include <avr/interrupt.h>
+#include <string.h>
+
+unsigned char count = 0;
+static const char *string [];
 
 void PIN_INIT() 
 {
-	DDRB  |= (1<<DDB0 | 1<<DDB1);
+	DDRB  |= (1<<DDB0 | 1<<DDB1);    //Not sure which pins to use just yet. I think any of them can do.
 	PORTB |= (1<<PORTB0 | 1<<PORTB1);
 }
 
 void USART_INIT()
 {
-	cli(); //Disable interrupts prior to USART initialization
-
-	UCSR0A &= 0;		   //Do not need any settings from here
-	UCSR0B |= 0b10010000;  //Receive enable, receive interrupt enable, character size 8 bit.
+	UCSR0A &= 0; //Do not need any settings from here
+	UCSR0B |= ( 1<<TXEN0 | 1<<RXEN0); // Enable transmitter and receiver
 	UCSR0C |= 0b00000110;  //Character size 8 bit, asynchronous UART, 1 stop bit, no parity check
 
 	UBRR0H = (BAUDRATE>>8);
 	UBRR0L = BAUDRATE;
-
-	UCSR0B |= (1<<RXEN0 | 1<<TXEN0 | 1<<RXCIE0); // Enable transmitter, receiver, and receive interrupt
-
-	sei(); //Enable all interrupts following initialization
 }
 
 void USART_TRANSMIT(unsigned char data)
@@ -42,45 +42,52 @@ void USART_TRANSMIT(unsigned char data)
 	UDR0 = data;                        //Put data into buffer and send
 }
 
-ISR(USART_RX_vect, ISR_BLOCK)
+void step_up(unsigned char direction)
 {
-	cli();								//Disable interrupt nesting
 	volatile uint8_t data = UDR0;
 	
-	if (data == 'W' || data == 'w')
+	if(data == 'A' || data == 'a')
 		{
 			USART_TRANSMIT(data);
-			// switch control
-		}
-	if (data == 'A' || data == 'a')
-		{
-			USART_TRANSMIT(data);
-			// will likely need a while loop "direction++"
-			if(int i = FORWARD)
+			if(direction == CW)
 			{
-				PORTB |= (1<<PORTB0);
+				count++;
+				if(count > 7) count = 0;
+				}
+				
+			else if(direction == CCW)
+			{
+				count--;	
 			}
-		}
-	else if (data == 'S' || data == 's')
-		{
-			USART_TRANSMIT(data);
-			// while loop in other direction "direction--"
-			for(int i = REVERSE)
+			
+			else
 			{
-				PORTB |= (1<<PORTB1);
+				count = 7;
 			}
 		}
 		
-		sei();
+void switch_step()
+{		
+	if(data == 'S' || data == 'S')
+		{
+			USART_TRANSMIT(data);
+			case 0: value = 0x1; break;
+			case 1: value = 0x1; break;
+			case 2: value = 0x1; break;
+			case 3: value = 0x1; break;
+			case 4: value = 0x1; break;
+			case 5: value = 0x1; break;
+			case 6: value = 0x1; break;
+			case 7: value = 0x1; break;
+		}
 }
 
 int main(void)
 {
 	PIN_INIT();
 	USART_INIT();
-	
-	sei();
+	step_up();
+	switch_step;
 	
     while (1){}
 }
-
