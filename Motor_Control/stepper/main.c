@@ -4,7 +4,7 @@
  * Author : RASCGULL
  */
 
-//36kHz appears to be upper echelon of motor. 22 Volts will pull up to 5kHz
+//Objective is to control stepper motors for gimbal.
 
 #define F_CPU 16000000UL
 #define BAUD 115200
@@ -16,9 +16,8 @@
 #define pulsePin2 (1<<PORTD4)
 
 #include <avr/io.h>
-#include <avr/interrupt.h>
 #include <stdlib.h>
-#include <string.h>
+#include <avr/interrupt.h>
 #include <util/delay.h>
 
 void uart_init() //Initialize transmit/receive setting for primary/secondary comms
@@ -126,7 +125,7 @@ ISR(USART_RX_vect, ISR_BLOCK)
 		uart_transmit(data);
 		step_vccw();
 	}
-  
+
 	sei(); //Enable global interrupt
 }
 
@@ -134,7 +133,7 @@ int main() //Call all child functions
 {
 	DDRB |= (1<<DDB0 | 1<<DDB1); //Enable 2 random pins for DIRECTION- and PULSE- for Stepper Motor 1
 	DDRD |= (1<<DDD3 | 1<<DDD4); //Enable 2 random pins for DIRECTION- and PULSE- for Stepper Motor 2
-  
+
 	uart_init();
 	sei();
 	while (1){}
