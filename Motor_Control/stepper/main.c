@@ -46,7 +46,7 @@ void step_hcw() //Rotate horizontal clockwise with 'S' key
 	unsigned char count_cw;
   
 	PORTB |= directionPin1; //Set direction pin HIGH to rotate clockwise
-	for(count_cw = 0; count_cw < 200; count_cw++) //There are 200 steps in the stepper motor. Each step is 1.8° x 200 = 360°.
+	for(count_cw = 0; count_cw < 200; count_cw++) //There are 400 steps in this stepper motor. Each step is 0.9° x 400 = 360°.
 	{
 		PORTB |= pulsePin1;  //Pulse on and off clockwise
 		_delay_ms(1);
@@ -73,12 +73,12 @@ void step_vcw() //Rotate vertical clockwise with 'W' key
 {
 	unsigned char count_vcw;
 	
-	PORTB |= ~directionPin2; //Set direction pin HIGH to rotate clockwise
+	PORTD |= directionPin2; //Set direction pin HIGH to rotate clockwise
 	for(count_vcw = 0; count_vcw < 200; count_vcw++) //There are 200 steps in the stepper motor. Each step is 1.8° x 200 = 360°.
 	{
-		PORTB |= pulsePin2;  //Pulse on and off clockwise
+		PORTD |= pulsePin2;  //Pulse on and off clockwise
 		_delay_ms(1);
-		PORTB &= ~pulsePin2;
+		PORTD &= ~pulsePin2;
 		_delay_ms(1);
 	}
 }
@@ -87,12 +87,12 @@ void step_vccw() //Rotate vertical counterclockwise with 'Z' key
 {
 	unsigned char count_vccw;
 	
-	PORTB &= directionPin2; //Set direction pin HIGH to rotate clockwise
-	for(count_vccw = 0; count_vccw < 200; count_vccw++) //There are 200 steps in the stepper motor. Each step is 1.8° x 200 = 360°.
+	PORTD &= ~directionPin2; //Set direction pin HIGH to rotate clockwise
+	for(count_vccw = 0; count_vccw < 200; count_vccw++)
 	{
-		PORTB |= pulsePin2;  //Pulse on and off clockwise
+		PORTD |= pulsePin2;  //Pulse on and off clockwise
 		_delay_ms(1);
-		PORTB &= ~pulsePin2;
+		PORTD &= ~pulsePin2;
 		_delay_ms(1);
 	}
 }
@@ -105,25 +105,25 @@ ISR(USART_RX_vect, ISR_BLOCK)
 	if(data == 'A' || data == 'a') 
 	{
 		uart_transmit(data);
-		step_hccw();
+		step_hcw();
 	} 
   
 	else if(data == 'S' || data == 's') 
 	{
 		uart_transmit(data);
-		step_hcw();
+		step_hccw();
 	}
-  
+
 	else if(data == 'W' || data == 'w')
 	{
 		uart_transmit(data);
-		step_vcw();
+		step_vccw();
 	}
   
 	else if(data == 'Z' || data == 'z')
 	{
 		uart_transmit(data);
-		step_vccw();
+		step_vcw();
 	}
 
 	sei(); //Enable global interrupt
