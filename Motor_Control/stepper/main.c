@@ -26,13 +26,13 @@ void uart_init() //Initialize transmit/receive setting for primary/secondary com
 
     UCSR0A &= 0; //Do not need any settings from here
     UCSR0B |= 0b10010000; //Receive enable, receive interrupt enable, character size 8 bit.
-    UCSR0B |= (1 << RXEN0) | (1 << TXEN0) | (1 << RXCIE0); // Enable receiver, transmitter, and receive interrupt.
+    UCSR0B |= (1 << RXEN0) | (1 << TXEN0) | (1 << RXCIE0); //Enable receiver, transmitter, and receive interrupt.
     UCSR0C |= 0b00000110; //Character size 8 bit, asynchronous UART, 1 stop bit, no parity check
 
     UBRR0H = BAUD9600>>8;
     UBRR0L = BAUD9600;
 
-    sei(); // Enable interrupts following initialization
+    sei(); //Enable interrupts following initialization
 }
 
 void uart_transmit(unsigned char data) //Transmit buffer
@@ -45,7 +45,7 @@ void step_hcw() //Rotate horizontal clockwise with 'S' key
 {
 	unsigned char count_cw;
   
-	PORTB &= ~directionPin1; //Set direction pin HIGH to rotate clockwise
+	PORTB &= ~directionPin1; //Set direction pin LOW to rotate clockwise
 	for(count_cw = 0; count_cw < 200; count_cw++) //There are 200 steps in this stepper motor. Each step is 1.8° x 200 = 360°.
 	{
 		PORTB |= pulsePin1;  //Pulse on and off clockwise
@@ -59,22 +59,22 @@ void step_hccw() //Rotate horizontal counterclockwise with 'A' key
 {
 	unsigned char count_ccw;
 
-	PORTB |= directionPin1;  //Set direction pin LOW to rotate counterclockwise
+	PORTB |= directionPin1;  //Set direction pin HIGH to rotate counterclockwise
 	for(count_ccw = 0; count_ccw < 200; count_ccw++)
 	{
 		PORTB |= pulsePin1; //Pulse on and off counterclockwise
 		_delay_ms(1);
 		PORTB &= ~pulsePin1;
 		_delay_ms(1);
-	} 
+	}
 }
 
 void step_vcw() //Rotate vertical clockwise with 'W' key
 {
 	unsigned char count_vcw;
 	
-	PORTD &= ~directionPin2; //Set direction pin HIGH to rotate clockwise
-	for(count_vcw = 0; count_vcw < 200; count_vcw++) //There are 200 steps in the stepper motor. Each step is 1.8° x 200 = 360°.
+	PORTD &= ~directionPin2;
+	for(count_vcw = 0; count_vcw < 200; count_vcw++)
 	{
 		PORTD |= pulsePin2;  //Pulse on and off clockwise
 		_delay_ms(1);
@@ -87,22 +87,22 @@ void step_vccw() //Rotate vertical counterclockwise with 'Z' key
 {
 	unsigned char count_vccw;
 	
-	PORTD |= directionPin2; //Set direction pin HIGH to rotate clockwise
+	PORTD |= directionPin2;
 	for(count_vccw = 0; count_vccw < 200; count_vccw++)
 	{
-		PORTD |= pulsePin2;  //Pulse on and off clockwise
+		PORTD |= pulsePin2;  //Pulse on and off counterclockwise
 		_delay_ms(1);
 		PORTD &= ~pulsePin2;
 		_delay_ms(1);
 	}
 }
 
-ISR(USART_RX_vect, ISR_BLOCK)
+ISR(USART_RX_vect, ISR_BLOCK) //Interrupt normal operation and receive the four inputs
 {
 	cli(); //Disable interrupt nesting
 	volatile uint8_t data = UDR0;
 
-	if(data == 'A' || data == 'a') 
+	if(data == 'A' || data == 'a') //If key 'A' or 'a' is detected, step horizontally in the counterclockwise direction.
 	{
 		uart_transmit(data);
 		step_hccw();
