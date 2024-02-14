@@ -4,9 +4,9 @@
  * Author : RASCGULL
  */
 
-//Objective is to control stepper motors for gimbal.
+//Objective is to manually control two stepper motors for gimbal.
 
-#define F_CPU 16000000UL
+#define F_CPU 16000000UL //All definition needed for the program
 #define BAUD 115200
 #define BAUDRATE ((F_CPU)/(BAUD*16UL)-1)
 #define BAUD9600 103u
@@ -16,19 +16,20 @@
 #define pulsePin2 (1<<PORTD4)
 
 #include <avr/io.h>
+#include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <avr/interrupt.h>
 #include <util/delay.h>
 
-void uart_init() //Initialize transmit/receive setting for primary/secondary comms
+void uart_init() //Initialize transmit/receive setting for primary/secondary communications.
 {
     cli(); //Disable interrupts prior to USART initialization
 
     UCSR0A &= 0; //Do not need any settings from here
+	UCSR0B |= (1 << RXEN0 | 1 << TXEN0 | 1 << RXCIE0); //Enable receiver, transmitter, and receive interrupt.
     UCSR0B |= 0b10010000; //Receive enable, receive interrupt enable, character size 8 bit.
-    UCSR0B |= (1 << RXEN0) | (1 << TXEN0) | (1 << RXCIE0); //Enable receiver, transmitter, and receive interrupt.
-    UCSR0C |= 0b00000110; //Character size 8 bit, asynchronous UART, 1 stop bit, no parity check
-
+	UCSR0C |= 0b00000110; //Character size 8 bit, asynchronous UART, 1 stop bit, no parity check
     UBRR0H = BAUD9600>>8;
     UBRR0L = BAUD9600;
 
@@ -41,12 +42,12 @@ void uart_transmit(unsigned char data) //Transmit buffer
 	UDR0 = data;                    //Put data into buffer and send
 }
 
-void step_hcw() //Rotate horizontal clockwise with 'S' key
+void step_hcw() //Rotate horizontal clockwise
 {
-	unsigned char count_cw;
+	unsigned char count_hcw;
   
 	PORTB &= ~directionPin1; //Set direction pin LOW to rotate clockwise
-	for(count_cw = 0; count_cw < 200; count_cw++) //There are 200 steps in this stepper motor. Each step is 1.8° x 200 = 360°.
+	for(count_hcw = 0; count_hcw < 200; count_hcw++) //There are 200 steps in this stepper motor. Each step is 1.8° x 200 = 360°.
 	{
 		PORTB |= pulsePin1;  //Pulse on and off clockwise
 		_delay_ms(1);
@@ -55,12 +56,12 @@ void step_hcw() //Rotate horizontal clockwise with 'S' key
 	}
 }
 
-void step_hccw() //Rotate horizontal counterclockwise with 'A' key
+void step_hccw() //Rotate horizontal counterclockwise
 {
-	unsigned char count_ccw;
+	unsigned char count_hccw;
 
-	PORTB |= directionPin1;  //Set direction pin HIGH to rotate counterclockwise
-	for(count_ccw = 0; count_ccw < 200; count_ccw++)
+	PORTB |= directionPin1; //Set direction pin HIGH to rotate counterclockwise
+	for(count_hccw = 0; count_hccw < 200; count_hccw++)
 	{
 		PORTB |= pulsePin1; //Pulse on and off counterclockwise
 		_delay_ms(1);
@@ -69,7 +70,7 @@ void step_hccw() //Rotate horizontal counterclockwise with 'A' key
 	}
 }
 
-void step_vcw() //Rotate vertical clockwise with 'W' key
+void step_vcw() //Rotate vertical clockwise
 {
 	unsigned char count_vcw;
 	
@@ -83,7 +84,7 @@ void step_vcw() //Rotate vertical clockwise with 'W' key
 	}
 }
 
-void step_vccw() //Rotate vertical counterclockwise with 'Z' key
+void step_vccw() //Rotate vertical counterclockwise
 {
 	unsigned char count_vccw;
 	
@@ -97,7 +98,7 @@ void step_vccw() //Rotate vertical counterclockwise with 'Z' key
 	}
 }
 
-ISR(USART_RX_vect, ISR_BLOCK) //Interrupt normal operation and receive the four inputs
+ISR(USART_RX_vect, ISR_BLOCK) //Interrupt occurs when keys A, S, W, or Z are pressed.
 {
 	cli(); //Disable interrupt nesting
 	volatile uint8_t data = UDR0;
