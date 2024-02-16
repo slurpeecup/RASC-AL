@@ -84,7 +84,6 @@ Motor_Action string_parse(char INPUT)
         
         if (isAlpha(INPUT))  
         {
-            BUFFER[iter_i + 1] = '\n';
             // this is your motor & direction sel.
             // A: M1 CW     C: M2 CW
             // B: M1 CCW    D: M2 CCW
