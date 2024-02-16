@@ -14,19 +14,19 @@
 
 typedef struct
 {
-    uint32_t STEPS;      // defining return type of motor action packet
+    uint16_t STEPS;      // defining return type of motor action packet
     char     ASSIGN;     // assignment for motor and direction
     char     STATUS;     // describes whether or not the current return value should be
                          // accepted as the number of steps to take
 } Motor_Action;
 
 // custom pow function because I am too stubborn to include math.h on a resource-constrained system.
-uint32_t pow_(uint32_t base, uint32_t exp) 
+uint16_t pow_(uint16_t base, uint16_t exp) 
 {
     if (exp < 0) 
         return 0;
         
-    uint32_t result = 1;
+    uint16_t result = 1;
     while (exp)
     {
         if (exp & 1)
@@ -37,10 +37,10 @@ uint32_t pow_(uint32_t base, uint32_t exp)
     return result;
 }
 
-uint32_t stou16(char *INPUT, uint8_t SIZE)
+uint16_t stou16(char *INPUT, uint8_t SIZE)
 {
-    uint32_t sum = 0;
-    uint32_t iter_j = 0;
+    uint16_t sum = 0;
+    uint16_t iter_j = 0;
     
     char *BUFFER = INPUT;
     while (*BUFFER != '>')
@@ -54,7 +54,7 @@ uint32_t stou16(char *INPUT, uint8_t SIZE)
     return sum;
 }
 
-// this returns a struct of type uint32_t and two chars
+// this returns a struct of type uint16_t and two chars
 
 Motor_Action string_parse(char INPUT)
 {
@@ -111,6 +111,7 @@ if (placeholder_name.status)
 }
 otherwise, exit interrupt
 */
+
 int main()
 {
     char SHABL[10] = {'<', '1', '3', '6', '5', '3', '2', 'C', '0', '0'};
