@@ -1,9 +1,33 @@
-/*
- * 15 FEB 2024
- * Zaid Yasin
-*/
 
-#include <parsing.h>
+#define IS_VALID(INPUT) (INPUT >= 'a' && INPUT <= 'b') || (INPUT >= 'A' && INPUT <= 'B') || (INPUT >= '0' && INPUT <= '9' )|| (INPUT == '%' || INPUT == '>')
+#define isAlpha(INPUT)  (INPUT >= 'a' && INPUT <= 'b') || (INPUT >= 'A' && INPUT <= 'B')
+
+
+#include <stdio.h>
+#include <string.h>
+#include <stdint.h>
+
+typedef struct
+{
+    uint16_t STEPS_X;    // defining return type of motor action packet
+    uint16_t STEPS_Y;
+    
+    char     DIR_X;     // assignment for motor and direction
+    char     DIR_Y;
+    char     STATUS;     // describes whether or not the current return value should be
+                         // accepted as the number of steps to take
+} Motor_Action;
+
+typedef struct 
+{
+    uint8_t STRING_SEL;
+
+    char  X [32];
+    char  Y [32];
+
+    uint8_t iX;
+    uint8_t iY;
+} xy;
 
 // custom pow function because I am too stubborn to include math.h on a resource-constrained system.
 uint16_t pow_(uint16_t base, uint16_t exp) 
@@ -95,8 +119,8 @@ Motor_Action string_parse(char INPUT)
     {
         //this line is funny because of how unreadable it is, so i'm keeping it.
 
-        (XY_SEL == 'X') ? (XY.X[XY.iX++] = INPUT )
-                        : (XY.Y[XY.iY++] = INPUT );
+        (XY_SEL == 'X') ? (XY.X[XY.iX++] = INPUT )//- '0') 
+                        : (XY.Y[XY.iY++] = INPUT );//- '0');
 
         if (INPUT == '>')  
         {
@@ -122,9 +146,9 @@ Motor_Action string_parse(char INPUT)
     return INTERNAL;
 }
 
-void TEST()
+int main()
 {
-  char demo[14] = {'<', '5', '6', '5', '3', '2', 'A','%', '4', '5','6','8','b','>'};
+    char demo[14] = {'<', '5', '6', '5', '3', '2', 'A','%', '4', '5','6','8','b','>'};
     
     Motor_Action retval;
     
@@ -145,4 +169,3 @@ void TEST()
     }
     return 0;
 }
-

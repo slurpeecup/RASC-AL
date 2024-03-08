@@ -4,7 +4,7 @@ void UART_INIT() {
     cli(); // Disable interrupts prior to USART initialization
 
     UCSR0A &= 0;              // Do not need any settings from here
-    UCSR0B |= 0b10010000;     // Receive enable, receive interrupt enable, character size 8 bit.
+    UCSR0B |= 0b10011000;     // Receive enable, receive interrupt enable, character size 8 bit.
     UCSR0C |= 0b00000110;     // Character size 8 bit, asynchronous UART, 1 stop bit, no parity check
 
     UBRR0H = BAUD9600 >> 8;
@@ -50,7 +50,7 @@ void TIMER1_INIT() {
 }
 
 ISR(USART_RX_vect, ISR_BLOCK) {
-    cli(); // Disable interrupt nesting
+ // cli(); // Disable interrupt nesting
     volatile uint8_t data = UDR0;
 
     if (data == 'W' || data == 'w') {
