@@ -16,5 +16,6 @@ int main(void)
 	
 	sei();
 
-	while (1){};
+	while (1)
+	{};
 }
