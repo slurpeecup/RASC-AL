@@ -172,7 +172,7 @@ void dumpString (char * inString)
 
 void motor_X_Buffer_Push()
 {
-	dumpString("XPUSH\r\n");
+	//dumpString("XPUSH\r\n");
 	MINSB_X0.INST_LIST[MINSB_X0.INST_INDEX] = TFB0.INST;
 	MINSB_X0.num_insts++;
 	MINSB_X0.INST_INDEX++;
@@ -180,7 +180,7 @@ void motor_X_Buffer_Push()
 
 void motor_X_Buffer_Pop()
 {
-	dumpString("XPOP\r\n");
+	//dumpString("XPOP\r\n");
 	if (MINSB_X0.num_insts > 0)
 	{
 		size_t rest_of_buffer = sizeof(instruction) * (MINSB_X0.num_insts - 1); // size of the rest of the elements, minus one
@@ -197,7 +197,7 @@ void motor_X_Buffer_Pop()
 
 void motor_Y_Buffer_Push()
 {
-	dumpString("YPUSH\r\n");
+	//dumpString("YPUSH\r\n");
 	MINSB_Y0.INST_LIST[MINSB_Y0.INST_INDEX] = TFB0.INST; // straight copy the instruction into the smallest available index
 	MINSB_Y0.INST_INDEX++;  // move to the next index
 	MINSB_Y0.num_insts++;
@@ -207,7 +207,7 @@ void motor_Y_Buffer_Push()
 
 void motor_Y_Buffer_Pop()
 {
-	dumpString("YPOP\r\n");
+	//dumpString("YPOP\r\n");
 	if (MINSB_Y0.num_insts > 0)
 	{
 		size_t rest_of_buffer = sizeof(instruction) * (MINSB_Y0.num_insts - 1); // size of the rest of the elements, minus one
@@ -258,7 +258,7 @@ void BUFFER_LOAD(char UDR0_data)
 
 void SET_DIR(char DIR_INPUT, uint8_t MOTOR)
 {
-	dumpString("Set Dir\r\n");
+	//dumpString("Set Dir\r\n");
 	switch (DIR_INPUT)
 	{
 
@@ -352,7 +352,7 @@ int main(void)
 
 ISR (TIMER1_COMPA_vect)
 {
-	USART_TRANSMIT('A');
+	//USART_TRANSMIT('A');
 	if (ACTIVE_INST.MOTOR_X_FLAG && (ACTIVE_INST.MOTOR_X_NSTEPS!=0))
 	{
 		PORTD &= ~(1 << MOTOR_X_PULSE_PIN); // pin 2 goes hi
@@ -365,7 +365,7 @@ ISR (TIMER1_COMPA_vect)
 
 ISR(TIMER1_COMPB_vect)
 {
-	USART_TRANSMIT('B');
+	//USART_TRANSMIT('B');
 	if (ACTIVE_INST.MOTOR_X_FLAG && (ACTIVE_INST.MOTOR_X_NSTEPS!=0))
 	{
 		PORTD |= (1 << MOTOR_X_PULSE_PIN); // pin 2 goes hi
@@ -382,6 +382,6 @@ ISR(TIMER1_COMPB_vect)
 ISR(USART_RX_vect)
 {
 	volatile uint8_t data = UDR0;
-	USART_TRANSMIT(data);
+	USART_TRANSMIT(data);  //wasting cycles, this is just for debug
 	BUFFER_LOAD(data); //this should be fairly self documenting
 }
