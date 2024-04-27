@@ -9,8 +9,9 @@ import argparse
 import cv2
 import imutils
 import csv
+import math
 import serial
-	
+import time
 '''
 Configure program args
 '''
@@ -111,6 +112,8 @@ def main():
     setFrameCenter()
     defineBoundaries()
 
+    #set sysref time
+    start_time = time.time()
     # initialize list of data points to be saved to csv or xmitted
     data = []
 
@@ -175,30 +178,55 @@ def main():
                 count = count + 1
                 xSum = xSum + x
                 ySum = ySum + y
-
+        
+        hysteresis_trigger_x = 0
+        hysteresis_trigger_y = 0
         if count > 0:
             triCenter = [(xSum//count), (ySum//count)]
             data.append([np.subtract(triCenter, frameCenter), count])
 
             dx,dy = data[-1][0]
-            if (dx > 0 and dy < 0): #top right
+
+            if (abs(dx) <= 10):
+                hysteresis_trigger_x = 1
+            if (abs(dy) <= 10):
+                hysteresis_trigger_y = 1
+
+
+            if (dx < 0 and dy > 0): #top right
+               
                 output_x = b'\x58\x63' #Xc
                 output_y = b'\x59\x6E' #Yn
-            if (dx > 0 and dy > 0):
-                output_x = b'\x58\x63' #Xc
-                output_y = b'\x59\x63' #Yc
+
             if (dx < 0 and dy < 0):
+
+                output_x = b'\x58\x63' #Xc
+                output_y = b'\x59\x63' #Yc
+
+            if (dx > 0 and dy > 0):
+
                 output_x = b'\x58\x6E' #Xn
                 output_y = b'\x59\x6E' #Yn
-            if (dx > 0 and dy > 0):
+
+            if (dx > 0 and dy < 0):
+
                 output_x = b'\x58\x6E' #Xn
                 output_y = b'\x59\x63' #Yc
-		    
+                
+            if ((hysteresis_trigger_x == 1) and abs(dx) > 50):
+                hysteresis_trigger_x = 0
+            if ((hysteresis_trigger_y == 1) and abs(dy) > 50):
+                hysteresis_trigger_y = 0
+
 
             # tx/rx arduino
-            ser.write(output_x + b'\x64' + b'\x00')
-            ser.write(output_y + b'\x64' + b'\x00')
-
+            if (time.time() - start_time >= 0.02):
+                if (hysteresis_trigger_x == 0):
+                    ser.write((output_x + b'\x10' + b'\x00')) #//WTFFFF? python force inverting bits, undoing here
+                time.sleep(0.01)
+                if (hysteresis_trigger_y == 0):
+                    ser.write((output_y + b'\x10' + b'\x00'))
+                start_time = time.time()
 	    #ser.write((output + "\n").encode('ascii'))
         #line = ser.readline().decode('latin-1').rstrip()
 	  
@@ -229,11 +257,15 @@ def main():
 
         # if the 'q' key is pressed, stop the loop
         if key == ord("q"):
+            print("Closing serial pipe...")
+            #ser.close()
             break
 
     # stop the camera video stream
     print("Stopping video stream...")
     vs.stop()
+
+    
 
     # close all windows
     cv2.destroyAllWindows()
@@ -247,3 +279,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
