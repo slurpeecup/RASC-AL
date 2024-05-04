@@ -1,8 +1,5 @@
-'Credit to Adrian Rosebrock at pyimagesearch.com for the Ball Tracking with OpenCV guide and code snippets'
-
 from collections import deque
 from imutils.video import VideoStream
-
 import pyrealsense2 as rs
 import numpy as np
 import argparse
@@ -12,6 +9,7 @@ import csv
 import math
 import serial
 import time
+
 '''
 Configure program args
 '''
@@ -77,27 +75,31 @@ def defineBoundaries():
     global boundaries 
     global buffers
 
-    # define the lower and upper boundaries
-    # of the target balls in the HSV color space
-    # h = hue, s = saturation, v = value(brightness)
-    # use rgb_to_hsv.py to convert rgb to hsv
-    colors = ["green", "pink", "yellow"]
-    bgr = [(50, 205, 50), (147, 105, 255), (0, 255, 255)]
+    # Define the color you want to track
+    target_color = "red"
 
-    greenBounds = ((50, 140, 60) , (80, 255, 250)) # (lower, upper)
-    greenBuffer = deque(maxlen=args["buffer"]) # points to be visualized as "tail"
+    # Set the RGB color for the target color (you can choose any color here, it's just for visualization)
+    bgr_target = (0, 35, 255)  # Red
 
-    pinkBounds = ((150, 140, 60), (170, 255, 250))
-    pinkBuffer = deque(maxlen=args["buffer"])
+    # Define HSV boundaries for cherry red
+    lower_bound = (162, 145, 134)  # Lower HSV threshold for cherry red
+    upper_bound = (182, 255, 255)  # Upper HSV threshold for cherry red
 
-    yellowBounds = ((15, 140, 60), (40, 255, 250))
-    yellowBuffer = deque(maxlen=args["buffer"])
 
-    boundaries = [greenBounds, pinkBounds, yellowBounds]
-    buffers = [greenBuffer, pinkBuffer, yellowBuffer]
+    # Create a buffer for the target color
+    target_buffer = deque(maxlen=args["buffer"])
+
+    # Set boundaries and buffer for the target color
+    boundaries = [(lower_bound, upper_bound)]
+    buffers = [target_buffer]
+    
+    # Set colors and BGR values
+    colors = [target_color]
+    bgr = [bgr_target]
+
 
 '''
-Build string to be output to UART dx,dy
+Build string to be output to UART dx,d
 '''
 def buildOutputStr(coordData):
     return str(coordData[0][0]) + "," + str(coordData[0][1])
@@ -112,7 +114,11 @@ def main():
     setFrameCenter()
     defineBoundaries()
 
-    #set sysref time
+    # Set the minimum area and circularity thresholds for a valid contour
+    min_area = 100
+    min_circularity = 0.7
+
+    # set sysref time
     start_time = time.time()
     # initialize list of data points to be saved to csv or xmitted
     data = []
@@ -128,7 +134,7 @@ def main():
         blurred = cv2.GaussianBlur(frame, (11, 11), 0)
         hsv = cv2.cvtColor(blurred, cv2.COLOR_BGR2HSV)
 
-        # construct a mask for the color "green", then perform
+        # construct a mask for the target color, then perform
         # a series of dilations and erosions to remove any small
         # blobs left in the mask
         masks = [None] * len(colors)
@@ -139,34 +145,33 @@ def main():
             masks[i] = cv2.erode(masks[i], None, iterations=2)
             masks[i] = cv2.dilate(masks[i], None, iterations=2)
 
-            # find contours in the mask and initialize the current (x, y) center of the ball
-            contours = cv2.findContours(masks[i].copy(), cv2.RETR_EXTERNAL,
-                cv2.CHAIN_APPROX_SIMPLE)
+            # find contours in the mask
+            contours = cv2.findContours(masks[i].copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
             contours = imutils.grab_contours(contours)
             center = None
 
-            # only proceed if at least one contour was found
-            if len(contours) > 0:
-                # find the largest contour in the mask, then use
-                # it to compute the minimum enclosing circle and
-                # centroid
-                c = max(contours, key=cv2.contourArea)
-                ((x, y), radius) = cv2.minEnclosingCircle(c)
-                M = cv2.moments(c)
-                center = (int(M["m10"] / M["m00"]), int(M["m01"] / M["m00"]))
+            # loop over the contours
+            for contour in contours:
+                # compute the area and circularity of the contour
+                area = cv2.contourArea(contour)
+                perimeter = cv2.arcLength(contour, True)
+                circularity = 4 * math.pi * area / (perimeter * perimeter)
 
-                # save dx, dy of center of contour from center of frame to data list
-                frameData[i] = center
-                
-                if args.get("draw", True):
-                    # update the buffer queue
-                    buffers[i].appendleft(center)
+                # check if the contour is a valid sphere
+                if area > min_area and circularity > min_circularity:
+                    # find the enclosing circle and centroid
+                    ((x, y), radius) = cv2.minEnclosingCircle(contour)
+                    center = (int(x), int(y))
 
-                    # only draw circle if the radius meets a minimum size
-                    if radius > args["radius"]:
+                    # save dx, dy of center of contour from center of frame to data list
+                    frameData[i] = center
+
+                    if args.get("draw", True):
+                        # update the buffer queue
+                        buffers[i].appendleft(center)
+
                         # draw the circle and centroid on the frame
-                        cv2.circle(frame, (int(x), int(y)), int(radius),
-                            bgr[i], 2)
+                        cv2.circle(frame, (int(x), int(y)), int(radius), bgr[i], 2)
                         cv2.circle(frame, center, int(args["radius"]), bgr[i], -1)
 
         # logic for detecting center of balls
@@ -174,62 +179,51 @@ def main():
         ySum = 0
         count = 0
         for x, y in frameData:
-            if (x > 0 or y > 0):
+            if x > 0 or y > 0:
                 count = count + 1
                 xSum = xSum + x
                 ySum = ySum + y
-        
+
         hysteresis_trigger_x = 0
         hysteresis_trigger_y = 0
         if count > 0:
-            triCenter = [(xSum//count), (ySum//count)]
+            triCenter = [(xSum // count), (ySum // count)]
             data.append([np.subtract(triCenter, frameCenter), count])
 
-            dx,dy = data[-1][0]
+            dx, dy = data[-1][0]
 
-            if (abs(dx) <= 10):
+            if abs(dx) <= 10:
                 hysteresis_trigger_x = 1
-            if (abs(dy) <= 10):
+            if abs(dy) <= 10:
                 hysteresis_trigger_y = 1
 
+            if dx < 0 and dy > 0:  # top right
+                output_x = b'\x58\x63'  # Xc
+                output_y = b'\x59\x6E'  # Yn
+            if dx < 0 and dy < 0:
+                output_x = b'\x58\x63'  # Xc
+                output_y = b'\x59\x63'  # Yc
+            if dx > 0 and dy > 0:
+                output_x = b'\x58\x6E'  # Xn
+                output_y = b'\x59\x6E'  # Yn
+            if dx > 0 and dy < 0:
+                output_x = b'\x58\x6E'  # Xn
+                output_y = b'\x59\x63'  # Yc
 
-            if (dx < 0 and dy > 0): #top right
-               
-                output_x = b'\x58\x63' #Xc
-                output_y = b'\x59\x6E' #Yn
-
-            if (dx < 0 and dy < 0):
-
-                output_x = b'\x58\x63' #Xc
-                output_y = b'\x59\x63' #Yc
-
-            if (dx > 0 and dy > 0):
-
-                output_x = b'\x58\x6E' #Xn
-                output_y = b'\x59\x6E' #Yn
-
-            if (dx > 0 and dy < 0):
-
-                output_x = b'\x58\x6E' #Xn
-                output_y = b'\x59\x63' #Yc
-                
-            if ((hysteresis_trigger_x == 1) and abs(dx) > 50):
+            if hysteresis_trigger_x == 1 and abs(dx) > 50:
                 hysteresis_trigger_x = 0
-            if ((hysteresis_trigger_y == 1) and abs(dy) > 50):
+            if hysteresis_trigger_y == 1 and abs(dy) > 50:
                 hysteresis_trigger_y = 0
 
-
             # tx/rx arduino
-            if (time.time() - start_time >= 0.02):
-                if (hysteresis_trigger_x == 0):
-                    ser.write((output_x + b'\x02' + b'\x00')) #//WTFFFF? python force inverting bits, undoing here
+            if time.time() - start_time >= 0.02:
+                if hysteresis_trigger_x == 0:
+                    ser.write((output_x + b'\x02' + b'\x00'))  # //WTFFFF? python force inverting bits, undoing here
                 time.sleep(0.01)
-                if (hysteresis_trigger_y == 0):
+                if hysteresis_trigger_y == 0:
                     ser.write((output_y + b'\x02' + b'\x00'))
                 start_time = time.time()
-	    #ser.write((output + "\n").encode('ascii'))
-        #line = ser.readline().decode('latin-1').rstrip()
-	  
+
             if args.get("verbose", True):
                 print(dx + dy)
                 print("\n")
@@ -265,8 +259,6 @@ def main():
     print("Stopping video stream...")
     vs.stop()
 
-    
-
     # close all windows
     cv2.destroyAllWindows()
 
@@ -279,4 +271,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
